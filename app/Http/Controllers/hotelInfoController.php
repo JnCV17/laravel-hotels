@@ -10,9 +10,8 @@ use Illuminate\Http\Request;
 use Flash;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Response;
-use App\Models\hotel;
 
-class commentarioController extends AppBaseController
+class hotelInfoController extends AppBaseController
 {
     /** @var  commentarioRepository */
     private $commentarioRepository;
@@ -56,13 +55,53 @@ class commentarioController extends AppBaseController
      */
     public function store(CreatecommentarioRequest $request)
     {
-        $input = $request->all();
+        $this->validate($request, [
+            'mensaje' => 'required',
+        ]);
 
-        $commentario = $this->commentarioRepository->create($input);
+        $estrellas = $request -> estrellas;
+        $mensaje = $request -> mensaje;
+        $idHotel = $request -> hotel_inv;
+        $idUser = $request -> usr_inv;
+        $hotel = Hotel::find($idHotel);
+        $calificacion = 0;
+        if($estrellas === '1'){
+            $calificacion = 1;
+        }
+        else if($estrellas === '2'){
+            $calificacion = 2;
+        }
+        else if($estrellas === '3'){
+            $calificacion = 3;
+        }
+        else if($estrellas === '4'){
+            $calificacion = 4;
+        }
+        else{
+            $calificacion = 5;
+        }
+        $numComentarios = DB::table('comentarios')->where('id_hotel', $idHotel)->count();
+        if($numComentarios === 0){
+            $hotel -> calificacion = $calificacion;
+            $hotel -> save();
+        }else{
+            $miCalificacion = $hotel -> calificacion;
+            $nuevaCalificacion = ($calificacion + $miCalificacion) / 2;
+            $hotel -> calificacion = $nuevaCalificacion;
+            $hotel -> save();
+        }
+        Comentario::create([
+            'calificacion' => $calificacion,
+            'mensaje' => $mensaje,
+            'id_hotel' => $idHotel,
+            'id_usuario' => $idUser,
+        ]);
 
-        Flash::success('Commentario saved successfully.');
-
-        return redirect(route('commentarios.index'));
+        $comentarios = DB::table('comentarios')->where('id_hotel', $idHotel)->orderBy('id', 'DESC')->paginate(5);
+        foreach ($comentarios as $comentario){
+            $comentario -> correo = User::find($comentario -> id_usuario) -> email;
+        }
+        return view('hoteles.showHotel')->with('hotel', $hotel)->with('comentarios', $comentarios);
     }
 
     /**
@@ -74,17 +113,12 @@ class commentarioController extends AppBaseController
      */
     public function show($id)
     {
-
-
-        $commentario = $this->commentarioRepository->findWithoutFail($id);
-
-        if (empty($commentario)) {
-            Flash::error('Commentario not found');
-
-            return redirect(route('commentarios.index'));
+        $hotel = Hotel::find($id);
+        $comentarios = DB::table('comentarios')->where('id_hotel', $id)->orderBy('id', 'DESC')->paginate(5);
+        foreach ($comentarios as $comentario){
+            $comentario -> correo = User::find($comentario -> id_usuario) -> email;
         }
-
-        return view('commentarios.show')->with('commentario', $commentario);
+        return view('display.hotelInfoLogged')->with('hotel', $hotel)->with('comentarios', $comentarios);
     }
 
     /**
@@ -95,7 +129,7 @@ class commentarioController extends AppBaseController
      */
     public function showComments($id)
     {
-        $hotel = hotel::find($id);
+        $hotel = Hotel::find($id);
         $comentarios = DB::table('commentarios')->where('id_hotel', $id)->orderBy('id', 'DESC')->paginate(5);
         foreach ($comentarios as $comentario){
             $comentario -> email = User::find($comentario -> id_usuario) -> email;

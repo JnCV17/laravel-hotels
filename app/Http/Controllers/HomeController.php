@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,15 +24,12 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['client', 'administrator']);
+        $request->user()->authorizeRoles(['administrator']);
+
+        if(Auth::user()->hasRole('client')){
+            return redirect('/displayLogged');
+        }
         return view('home');
     }
-
-    public function someAdminStuff(Request $request)
-    {
-      $request->user()->authorizeRoles('manager');
-      return view('hotels');
-    }
-
 
 }

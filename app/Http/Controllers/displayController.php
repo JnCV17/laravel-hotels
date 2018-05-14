@@ -14,7 +14,7 @@ class displayController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+
     }
 
     /**
@@ -24,15 +24,8 @@ class displayController extends Controller
      */
     public function index(Request $request)
     {
-        $request->user()->authorizeRoles(['client', 'administrator']);
             $hoteles =DB::table('hotels')->paginate(5);
             return view('display.display')->with('hoteles', $hoteles);
 
-    }
-
-    public function someAdminStuff(Request $request)
-    {
-        $request->user()->authorizeRoles('manager');
-        return view('hotels');
     }
 }

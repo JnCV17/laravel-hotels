@@ -26,13 +26,8 @@ class displayLoggedController extends Controller
     {
         $request->user()->authorizeRoles(['client', 'administrator']);
         $hoteles =DB::table('hotels')->paginate(5);
-        return view('display.display')->with('hoteles', $hoteles);
+        return view('display.displayLogged')->with('hoteles', $hoteles);
 
     }
 
-    public function someAdminStuff(Request $request)
-    {
-        $request->user()->authorizeRoles('manager');
-        return view('hotels');
-    }
 }

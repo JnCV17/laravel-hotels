@@ -18,6 +18,9 @@
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/css/skins/_all-skins.min.css">
+
 
 </head>
 <body>
@@ -30,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand page-scroll" href="/display"><i class="ion-ios-analytics-outline"></i> Laravel Hotels</a>
+            <a class="navbar-brand page-scroll" href="/displayLogged"><i class="ion-ios-analytics-outline"></i> Laravel Hotels</a>
         </div>
         <div class="navbar-collapse collapse" id="bs-navbar">
             <ul class="nav navbar-nav">
@@ -52,7 +55,7 @@
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <!-- The user image in the navbar-->
-                        <img src="http://infyom.com/images/logo/blue_logo_150x150.jpg"
+                        <img src="https://cdn.woorkup.com/wp-content/uploads/2016/04/gravatar.png"
                              class="user-image" alt="User Image"/>
                         <!-- hidden-xs hides the username on small devices so only the image appears. -->
                         <span class="hidden-xs">{!! Auth::user()->name !!}</span>
@@ -60,20 +63,17 @@
                     <ul class="dropdown-menu">
                         <!-- The user image in the menu -->
                         <li class="user-header">
-                            <img src="http://infyom.com/images/logo/blue_logo_150x150.jpg"
+                            <img src="https://cdn.woorkup.com/wp-content/uploads/2016/04/gravatar.png"
                                  class="img-circle" alt="User Image"/>
-                            <p>
+                            <p style="color: #111;">
                                 {!! Auth::user()->name !!}
                                 <small>Member since {!! Auth::user()->created_at->format('M. Y') !!}</small>
                             </p>
                         </li>
                         <!-- Menu Footer-->
                         <li class="user-footer">
-                            <div class="pull-left">
-                                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                            </div>
                             <div class="pull-right">
-                                <a href="{!! url('/logout') !!}" class="btn btn-default btn-flat"
+                                <a style="color: #111;" href="{!! url('/logout') !!}" class="btn btn-default btn-flat"
                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     Sign out
                                 </a>
@@ -196,19 +196,18 @@
                             <div class="row">
                                 <div class="col-md-8">
                                     <h1>{{ $hotel -> nombre }}</h1>
-                                    <p class="font-primary">Dirección: {{ $hotel -> direccion }}<a>
-                                            / {{ $hotel -> ciudad }}</a></p>
+                                    <p class="font-primary">Address: {{ $hotel -> direccion }} - {{ $hotel -> ciudad }}</p>
                                     <p class="font-primary"><a id="fondo-azul1"><strong>{{ $hotel -> estrellas }} /
-                                                5</strong></a> {{ $hotel -> estrellas }}</p>
+                                                5</strong></a></p>
 
                                 </div>
                                 <div class="col-md-4 verticalLine justify-content-center">
                                     <br>
-                                    <p class="text-center"><strong>Precio por habitación</strong></p>
+                                    <p class="text-center"><strong>Price:</strong></p>
                                     <p class="text-center font-costo">${{ number_format($hotel -> costo_habitacion, 2, ',', '.') }}</p>
 
                                     <p class="text-center">
-                                        <button type="button" class="btn btn-green" onclick="window.location='{{ route('commentarios.show', $hotel-> id)}}'">Ver más ></button>
+                                        <button type="button" class="btn btn-green" onclick="window.location='{{ route('hotelInfoLogged.show', $hotel-> id)}}'">More ></button>
                                     </p>
                                 </div>
                             </div>
@@ -260,16 +259,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-6 col-sm-3 column">
-                <h4>Information</h4>
+                <h4 class="text-secundary">Other Links</h4>
                 <ul class="list-unstyled">
-                    <li><a href="">Products</a></li>
-                    <li><a href="">Services</a></li>
-                    <li><a href="">Benefits</a></li>
-                    <li><a href="">Developers</a></li>
+                    <li><a href="/home">Administrator Console</a></li>
                 </ul>
             </div>
             <div class="col-xs-6 col-sm-3 column">
-                <h4>About</h4>
+                <h4 class="text-secundary">About</h4>
                 <ul class="list-unstyled">
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">Delivery Information</a></li>
@@ -278,7 +274,7 @@
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-3 column">
-                <h4>Stay Posted</h4>
+                <h4 class="text-secundary">Stay Posted</h4>
                 <form>
                     <div class="form-group">
                         <input type="text" class="form-control" title="No spam, we promise!" placeholder="Tell us your email">
@@ -291,14 +287,13 @@
             <div class="col-xs-12 col-sm-3 text-right">
                 <h4>Follow</h4>
                 <ul class="list-inline">
-                    <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
-                    <li><a rel="nofollow" href="" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
-                    <li><a rel="nofollow" href="" title="Dribble"><i class="icon-lg ion-social-dribbble-outline"></i></a></li>
+                    <li><a rel="nofollow" href="https://github.com/JnCV17/laravel-hotels" title="Github"><i class="icon-lg ion-social-github-outline"></i></a>&nbsp;</li>
+                    <li><a rel="nofollow" href="https://www.facebook.com/JnCV17" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
                 </ul>
             </div>
         </div>
         <br/>
-        <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Landing Zero by BootstrapZero</a> ©2015 Company</span>
+        <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Laravel Hotels by Juan Villada</a> ©2018</span>
     </div>
 </footer>
 <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

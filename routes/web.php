@@ -11,10 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('display', 'displayController');
 
+Route::get('/', 'displayController@index');
 
 Auth::routes();
 
@@ -22,9 +21,13 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/display', 'displayController@index');
 
+Route::get('/displayLogged', 'displayLoggedController@index');
+
 Route::resource('hotels', 'hotelController');
 
-Route::resource('display', 'displayController');
+Route::resource('displayLogged', 'displayLoggedController');
+
+Route::resource('hotelInfoLogged', 'hotelInfoLoggedController');
 
 Route::resource('search', 'searchController');
 
