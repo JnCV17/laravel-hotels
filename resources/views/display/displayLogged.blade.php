@@ -44,7 +44,7 @@
                     <a class="page-scroll" href="#two">Hotels Info</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="/search">Hotels Search</a>
+                    <a class="page-scroll" href="/searchLogged">Hotels Search</a>
                 </li>
                 <li>
                     <a class="page-scroll" href="#last">Contact</a>

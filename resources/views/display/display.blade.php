@@ -178,7 +178,7 @@
                                         <p class="text-center font-costo">${{ number_format($hotel -> costo_habitacion, 2, ',', '.') }}</p>
 
                                         <p class="text-center">
-                                            <button type="button" class="btn btn-green" onclick="window.location='{{ route('commentarios.show', $hotel-> id)}}'">Ver más ></button>
+                                            <button type="button" class="btn btn-green" onclick="window.location='{{ route('hotelInfo.show', $hotel-> id)}}'">Ver más ></button>
                                         </p>
                                     </div>
                                 </div>
@@ -230,16 +230,13 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-6 col-sm-3 column">
-                <h4>Information</h4>
+                <h4 class="text-secundary">Other Links</h4>
                 <ul class="list-unstyled">
-                    <li><a href="">Products</a></li>
-                    <li><a href="">Services</a></li>
-                    <li><a href="">Benefits</a></li>
-                    <li><a href="">Developers</a></li>
+                    <li><a href="/home">Administrator Console</a></li>
                 </ul>
             </div>
             <div class="col-xs-6 col-sm-3 column">
-                <h4>About</h4>
+                <h4 class="text-secundary">About</h4>
                 <ul class="list-unstyled">
                     <li><a href="#">Contact Us</a></li>
                     <li><a href="#">Delivery Information</a></li>
@@ -248,7 +245,7 @@
                 </ul>
             </div>
             <div class="col-xs-12 col-sm-3 column">
-                <h4>Stay Posted</h4>
+                <h4 class="text-secundary">Stay Posted</h4>
                 <form>
                     <div class="form-group">
                         <input type="text" class="form-control" title="No spam, we promise!" placeholder="Tell us your email">
@@ -261,14 +258,13 @@
             <div class="col-xs-12 col-sm-3 text-right">
                 <h4>Follow</h4>
                 <ul class="list-inline">
-                    <li><a rel="nofollow" href="" title="Twitter"><i class="icon-lg ion-social-twitter-outline"></i></a>&nbsp;</li>
-                    <li><a rel="nofollow" href="" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
-                    <li><a rel="nofollow" href="" title="Dribble"><i class="icon-lg ion-social-dribbble-outline"></i></a></li>
+                    <li><a rel="nofollow" href="https://github.com/JnCV17/laravel-hotels" title="Github"><i class="icon-lg ion-social-github-outline"></i></a>&nbsp;</li>
+                    <li><a rel="nofollow" href="https://www.facebook.com/JnCV17" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
                 </ul>
             </div>
         </div>
         <br/>
-        <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Landing Zero by BootstrapZero</a> ©2015 Company</span>
+        <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Laravel Hotels by Juan Villada</a> ©2018</span>
     </div>
 </footer>
 <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">

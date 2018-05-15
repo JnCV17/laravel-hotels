@@ -40,16 +40,6 @@ class hotelInfoLoggedController extends AppBaseController
     }
 
     /**
-     * Show the form for creating a new commentario.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        return view('commentarios.create');
-    }
-
-    /**
      * Store a newly created commentario in storage.
      *
      * @param CreatecommentarioRequest $request
@@ -102,7 +92,7 @@ class hotelInfoLoggedController extends AppBaseController
             'id_usuario' => $idUser,
         ]);
 
-        $comentarios = DB::table('comentarios')->where('id_hotel', $idHotel)->orderBy('id', 'DESC')->paginate(5);
+        $comentarios = DB::table('commentarios')->where('id_hotel', $idHotel)->orderBy('id', 'DESC')->paginate(5);
         foreach ($comentarios as $comentario){
             $comentario -> correo = User::find($comentario -> id_usuario) -> email;
         }
@@ -121,7 +111,7 @@ class hotelInfoLoggedController extends AppBaseController
         $hotel = Hotel::find($id);
         $comentarios = DB::table('commentarios')->where('id_hotel', $id)->orderBy('id', 'DESC')->paginate(5);
         foreach ($comentarios as $comentario){
-            $comentario -> correo = User::find($comentario -> id_usuario) -> email;
+            $comentario -> email = User::find($comentario -> id_usuario) -> email;
         }
         return view('display.hotelInfoLogged')->with('hotel', $hotel)->with('comentarios', $comentarios);
     }
@@ -142,72 +132,4 @@ class hotelInfoLoggedController extends AppBaseController
         return view('display.displayComments')->with('hotel', $hotel)->with('comentarios', $comentarios);
     }
 
-    /**
-     * Show the form for editing the specified commentario.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function edit($id)
-    {
-        $commentario = $this->commentarioRepository->findWithoutFail($id);
-
-        if (empty($commentario)) {
-            Flash::error('Commentario not found');
-
-            return redirect(route('commentarios.index'));
-        }
-
-        return view('commentarios.edit')->with('commentario', $commentario);
-    }
-
-    /**
-     * Update the specified commentario in storage.
-     *
-     * @param  int              $id
-     * @param UpdatecommentarioRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdatecommentarioRequest $request)
-    {
-        $commentario = $this->commentarioRepository->findWithoutFail($id);
-
-        if (empty($commentario)) {
-            Flash::error('Commentario not found');
-
-            return redirect(route('commentarios.index'));
-        }
-
-        $commentario = $this->commentarioRepository->update($request->all(), $id);
-
-        Flash::success('Commentario updated successfully.');
-
-        return redirect(route('commentarios.index'));
-    }
-
-    /**
-     * Remove the specified commentario from storage.
-     *
-     * @param  int $id
-     *
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        $commentario = $this->commentarioRepository->findWithoutFail($id);
-
-        if (empty($commentario)) {
-            Flash::error('Commentario not found');
-
-            return redirect(route('commentarios.index'));
-        }
-
-        $this->commentarioRepository->delete($id);
-
-        Flash::success('Commentario deleted successfully.');
-
-        return redirect(route('commentarios.index'));
-    }
 }

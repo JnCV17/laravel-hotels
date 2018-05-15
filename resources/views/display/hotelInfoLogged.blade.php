@@ -44,7 +44,7 @@
                     <a class="page-scroll" href="#two">Hotels Info</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="/search">Hotels Search</a>
+                    <a class="page-scroll" href="/searchLogged">Hotels Search</a>
                 </li>
                 <li>
                     <a class="page-scroll" href="#last">Contact</a>
@@ -88,27 +88,33 @@
         </div>
     </div>
 </nav>
-<section id="one" class="bg-dark">
-    <br>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    <p class="title">{{ $hotel -> nombre }}</p>
-                    <p class="font-secondary">{{ $hotel -> ciudad }}</p>
-                    <br>
-                    <p class="font-secondary">{{ $hotel -> direccion }}</p>
-                    <p class="font-secondary">{{ $hotel -> estrellas }}</p>
-                </div>
-                <div class="col-md-4">
-                    <br>
-                    <p class="text-center font-costo2">${{ number_format($hotel -> costo_habitacion, 2, ',', '.') }}</p>
-                    <br>
-                    <p class="font-primary text-right"><a id="fondo-azul1"><strong>{{ $hotel -> calificacion }} /
-                                5</strong></a></p>
+<header>
+    <div class="header-content">
+        <div class="inner">
+            <h1 class="margin-top-0 text-secundary cursive">{{ $hotel -> nombre }}</h1>&nbsp;<h1 class="margin-top-0 text-secundary cursive">{{ $hotel -> ciudad }}</h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <br>
+                        <h2 class="margin-top-0 text-secundary cursive">{{ $hotel -> direccion }}</h2>
+                        <br>
+                        <h2 class="margin-top-0 text-secundary cursive">Rating:</h2>
+                    </div>
+                    <div class="col-md-6">
+                        <br>
+                        <h2 class="margin-top-0 text-secundary cursive">${{ number_format($hotel -> costo_habitacion, 2, ',', '.') }}</h2>
+                        <br>
+                        <h2 class="margin-top-0 text-secundary cursive"><strong>{{ $hotel -> estrellas }}/5</strong></h2>
+                    </div>
                 </div>
             </div>
+            <br>
         </div>
-        <br>
+    </div>
+</header>
+<section id="one" class="bg-dark">
+    <h1 class="margin-top-0 text-secundary cursive text-center">Leave your Comment here</h1>
+    <br>
     {!! Form::open(['route'=>'hotelInfoLogged.store', 'method'=>'POST']) !!}
     <div class="fondo-items">
         <div class="container">
@@ -116,7 +122,7 @@
                 <div class="row">
                     <div class="col-md-5">
                         <p class="font-tertiary text-center">{{ Auth::user()->name }}</p>
-                        <p class="font-primary2 text-center">¿Conoces este hotel? Calificalo.</p>
+                        <p class="font-primary2 text-center">Leave your comment here</p>
                         {!!  Form::select('estrellas',['1' => '1', '2' => '2', '3' => '3', '4' => '4', '5' => '5'],  '1', ['class' => 'form-control' ]) !!}
                     </div>
                     <div class="col-md-5">
@@ -140,21 +146,69 @@
                 @endif
             </div>
             {!! Form::close() !!}
-            <div class="container">
-                @if(count($comentarios) > 0)
-                    @foreach($comentarios as $comentario)
-                        <div class="item-box">
-                            <div class="row">
-                                <div class="col-md-10">
-                                    <p class="font-primary">{{ $comentario -> contenido }}</p>
-                                </div>
-                            </div>
-
-                        </div>
-                    @endforeach
-                @endif
-            </div>
         </div>
         <br>
     </div>
 </section>
+<section id="two" class="bg-dark">
+    <h1 class="margin-top-0 text-secundary cursive text-center">Comments</h1>
+    <br>
+    <div class="container">
+        @if(count($comentarios) > 0)
+            @foreach($comentarios as $comentario)
+                <div class="item-box">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p class="font-primary">{{ $comentario -> contenido }}</p>
+                            <p class="font-primary">{{ $comentario -> email }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            @endforeach
+        @endif
+    </div>
+</section>
+<footer id="footer">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-6 col-sm-3 column">
+                <h4 class="text-secundary">Other Links</h4>
+                <ul class="list-unstyled">
+                    <li><a href="/home">Administrator Console</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-6 col-sm-3 column">
+                <h4 class="text-secundary">About</h4>
+                <ul class="list-unstyled">
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Delivery Information</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                </ul>
+            </div>
+            <div class="col-xs-12 col-sm-3 column">
+                <h4 class="text-secundary">Stay Posted</h4>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" title="No spam, we promise!" placeholder="Tell us your email">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#alertModal" type="button">Subscribe for updates</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-xs-12 col-sm-3 text-right">
+                <h4>Follow</h4>
+                <ul class="list-inline">
+                    <li><a rel="nofollow" href="https://github.com/JnCV17/laravel-hotels" title="Github"><i class="icon-lg ion-social-github-outline"></i></a>&nbsp;</li>
+                    <li><a rel="nofollow" href="https://www.facebook.com/JnCV17" title="Facebook"><i class="icon-lg ion-social-facebook-outline"></i></a>&nbsp;</li>
+                </ul>
+            </div>
+        </div>
+        <br/>
+        <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Laravel Hotels by Juan Villada</a> ©2018</span>
+    </div>
+</footer>
+</body>
+</html>

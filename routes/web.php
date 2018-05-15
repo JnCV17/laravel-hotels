@@ -29,6 +29,10 @@ Route::resource('displayLogged', 'displayLoggedController');
 
 Route::resource('hotelInfoLogged', 'hotelInfoLoggedController');
 
+Route::resource('hotelInfo', 'hotelInfoController');
+
 Route::resource('search', 'searchController');
+
+Route::resource('searchLogged', 'searchLoggedController');
 
 Route::resource('commentarios', 'commentarioController');

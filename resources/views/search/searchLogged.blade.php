@@ -17,6 +17,9 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.2/css/skins/_all-skins.min.css">
+
 
 </head>
 <body>
@@ -29,15 +32,42 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand page-scroll" href="/"><i class="ion-ios-analytics-outline"></i> Laravel Hotels</a>
+            <a class="navbar-brand page-scroll" href="/displayLogged"><i class="ion-ios-analytics-outline"></i> Laravel Hotels</a>
         </div>
         <div class="navbar-collapse collapse" id="bs-navbar">
             <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a class="page-scroll" href="#aboutModal">Login</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="#aboutModal">Register</a>
+                <li class="dropdown user user-menu">
+                    <!-- Menu Toggle Button -->
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <!-- The user image in the navbar-->
+                        <img src="https://cdn.woorkup.com/wp-content/uploads/2016/04/gravatar.png"
+                             class="user-image" alt="User Image"/>
+                        <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                        <span class="hidden-xs">{!! Auth::user()->name !!}</span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <!-- The user image in the menu -->
+                        <li class="user-header">
+                            <img src="https://cdn.woorkup.com/wp-content/uploads/2016/04/gravatar.png"
+                                 class="img-circle" alt="User Image"/>
+                            <p style="color: #111;">
+                                {!! Auth::user()->name !!}
+                                <small>Member since {!! Auth::user()->created_at->format('M. Y') !!}</small>
+                            </p>
+                        </li>
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-right">
+                                <a style="color: #111;" href="{!! url('/logout') !!}" class="btn btn-default btn-flat"
+                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Sign out
+                                </a>
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                                    {{ csrf_field() }}
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -49,7 +79,7 @@
             <h2 class="margin-top-0 text-secundary cursive">Search Hotels</h2>
             <hr class="primary">
             <br>
-            {!! Form::open([ 'route' => 'search.index', 'method' => 'GET' ]) !!}
+            {!! Form::open([ 'route' => 'searchLogged.index', 'method' => 'GET' ]) !!}
                 <div class="input-group">
                     {!! Form::text('nombre', null, ['class'=>'form-control', 'placeholder'=>'Search by hotel name or city']) !!}
                     <span class="input-group-btn">
@@ -92,7 +122,7 @@
                                 <p class="text-center font-costo">${{ number_format($hotel -> costo_habitacion, 2, ',', '.') }}</p>
 
                                 <p class="text-center">
-                                    <button type="button" class="btn btn-green" onclick="window.location='{{ route('hotelInfo.show', $hotel-> id)}}'">More ></button>
+                                    <button type="button" class="btn btn-green" onclick="window.location='{{ route('hotelInfoLogged.show', $hotel-> id)}}'">More ></button>
                                 </p>
                             </div>
                         </div>
@@ -149,7 +179,6 @@
         <br/>
         <span class="pull-right text-muted small"><a href="http://www.bootstrapzero.com">Laravel Hotels by Juan Villada</a> ©2018</span>
     </div>
-</footer>
 </footer>
 <!--scripts loaded here -->
 {!! Html::script('js/jquery.min.js') !!}
